@@ -1,0 +1,32 @@
+on:
+  workflow_call:
+    inputs:
+      rust_profile:
+        description: 'Execute rustup set profile {value} before installing the toolchain, ex. minimal'
+        required: false
+        type: string
+        default: 'minimal'
+      rust_toolchain:
+        description: 'Toolchain name to use, ex. stable, nightly.'
+        required: false
+        type: string
+        default: 'stable'
+      rust_components:
+        description: 'Comma-separated list of the additional components to install, ex. clippy, rustfmt.'
+        required: false
+        type: string
+      build_options:
+        description: 'Comma-separated list of the additional components to install, ex. clippy, rustfmt.'
+        required: false
+        type: string
+
+jobs:
+  land:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Install Ansible Dependency'
+        run: |
+            echo $ANSIBLE_CONFIG
+            echo $ANSIBLE_CONFIG1
+        env:
+          ANSIBLE_CONFIG: pisces/src/ansible/ansible.cfg

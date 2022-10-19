@@ -7,3 +7,5 @@ jobs:
     uses: ./.github/workflows/template.yml
     with:
       environment: development
+    environment:
+      name: production

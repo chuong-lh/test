@@ -5,5 +5,4 @@ on: [push]
 jobs:
   development:
     uses: ./.github/workflows/template.yml
-    env:
-      ANSIBLE_CONFIG1: chuong 
+    with: development

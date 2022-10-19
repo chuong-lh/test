@@ -5,4 +5,5 @@ on: [push]
 jobs:
   development:
     uses: ./.github/workflows/template.yml
-    with: development
+    with:
+      environment: development

@@ -31,7 +31,4 @@ jobs:
     steps:
       - name: 'Install Ansible Dependency'
         run: |
-            echo $ANSIBLE_CONFIG
-            echo $ANSIBLE_CONFIG1
-        env:
-          ANSIBLE_CONFIG: pisces/src/ansible/ansible.cfg
+            echo  ${{ inputs.build_options }}

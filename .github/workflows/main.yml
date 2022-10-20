@@ -1,11 +1,27 @@
 name: Run echo
 
-on: [push]
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run tests against'
+        required: true
+        type: choice
+        default: 'staging'
+        options:
+        - staging
+        - production
+      test_cases:
+        description: 'A Test Case is a set of actions executed to verify a particular feature or functionality of your software application.'
+        required: true
+        type: choice
+        default: 'smoke-test'
+        options:
+        - smoke-test
 
 jobs:
   development:
     uses: ./.github/workflows/template.yml
     with:
       environment: development
-    environment:
-      name: production
+      build_options: ${{ inputs.test_cases }} 

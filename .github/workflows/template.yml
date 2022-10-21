@@ -31,4 +31,4 @@ jobs:
     steps:
       - name: 'Install Ansible Dependency'
         run: |
-            echo  ${{ inputs.build_options }}
+            echo  '${{ inputs.build_options }}' 

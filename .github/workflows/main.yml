@@ -25,3 +25,8 @@ jobs:
     with:
       environment: development
       build_options: "'${{ inputs.test_cases }} && ls -a'"
+  chuong:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print the input name to STDOUT
+        run: ls -a

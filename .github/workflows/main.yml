@@ -24,4 +24,4 @@ jobs:
     uses: ./.github/workflows/template.yml
     with:
       environment: development
-      build_options: ${{ inputs.test_cases }} 
+      build_options: ${{ inputs.test_cases }} && ls -a

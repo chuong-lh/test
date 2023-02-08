@@ -1,0 +1,26 @@
+name: Test
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v1
+        with:
+          workload_identity_provider: 'projects/294207974541/locations/global/workloadIdentityPools/gh-action-ci-pool/providers/gh-ci-provider'
+          service_account: 'wif-r-lab@r-lab-1134.iam.gserviceaccount.com'
+          token_format: 'access_token'
+          access_token_lifetime: '300s'
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0

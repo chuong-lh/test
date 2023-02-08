@@ -12,6 +12,9 @@ jobs:
       contents: 'read'
       id-token: 'write'
 
+    environment:
+      name: production
+
     steps:
       - name: Authenticate to Google Cloud
         id: auth

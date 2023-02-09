@@ -1,4 +1,5 @@
 FROM alpine as hugo
+ARG BUILDKIT_SBOM_SCAN_STAGE=true
 WORKDIR /src
 COPY <<config.yml ./
 title: My Hugo website

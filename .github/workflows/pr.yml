@@ -57,5 +57,4 @@ jobs:
           VERSION: ${{ steps.prep.outputs.version }}
         run: |
           syft chuonglh/test:latest --scope all-layers -o spdx-json > sbom.json
-          cosign attach sbom --sbom sbom.json chuonglh/test@${{ steps.build.outputs.digest }}
           rm -f sbom.json

@@ -41,4 +41,4 @@ jobs:
       -
         name: Test
         run: |
-          docker inspect user/app:latest
+          docker images

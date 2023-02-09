@@ -36,6 +36,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: syft-installer
+        uses: anchore/sbom-action/download-syft@v0.13.1
+
       -
         name: Build
         uses: docker/build-push-action@v4
@@ -43,7 +46,6 @@ jobs:
           context: .
           tags: chuonglh/test:latest
           push: true
-          sbom: true
 
       -
         name: Test

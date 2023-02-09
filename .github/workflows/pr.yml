@@ -39,15 +39,24 @@ jobs:
       - name: syft-installer
         uses: anchore/sbom-action/download-syft@v0.13.1
 
+      - name: cosign-installer
+        uses: sigstore/cosign-installer@v2.8.1
+
       -
         name: Build
         uses: docker/build-push-action@v4
+        id: build
         with:
           context: .
           tags: chuonglh/test:latest
           push: true
 
-      -
-        name: Test
+      - name: Generate and Push signed SBOM for jx-boot
+        continue-on-error: true
+        env:
+          VERSION: ${{ steps.prep.outputs.version }}
         run: |
-          docker images
+          syft chuonglh/test:latest --scope all-layers -o spdx-json > sbom.json
+          cosign attach sbom --sbom sbom.json chuonglh/test@${{ steps.build.outputs.digest }}
+          cosign sign --attachment sbom chuonglh/test@${{ steps.build.outputs.digest }}
+          rm -f sbom.json

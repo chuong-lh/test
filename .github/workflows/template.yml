@@ -22,6 +22,12 @@ on:
       environment:
         required: true
         type: string
+      image_repository:
+        required: true
+        type: string
+      latest_tag:
+        required: false
+        type: string
 
 jobs:
   land:
@@ -29,6 +35,19 @@ jobs:
     environment:
       name: ${{ inputs.environment }}
     steps:
-      - name: 'Install Ansible Dependency'
-        run: |
-            echo  '${{ inputs.build_options }}' 
+      # - name: 'Install Ansible Dependency'
+      #   run: |
+      #       echo  '${{ inputs.build_options }}' 
+      - id: 'meta'
+        name: 'Docker Meta'
+        uses: 'docker/metadata-action@507c2f2dc502c992ad446e3d7a5dfbe311567a96' #v4.1.1
+        env:
+          DOCKER_METADATA_PR_HEAD_SHA: true
+        with:
+          images: ${{ inputs.image_repository }}
+          tags: |
+            type=ref,suffix=-{{sha}},event=branch
+            type=ref,suffix=-{{sha}},event=pr
+            type=ref,suffix=-{{sha}},event=tag
+            type=semver,event=tag,pattern={{raw}}
+            type=raw,value=${{ (inputs.latest_tag != '' && 'latest' ) }},enable=${{ inputs.latest_tag != '' }}

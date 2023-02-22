@@ -25,7 +25,6 @@ jobs:
     with:
       environment: development
       build_options: "'${{ inputs.test_cases }} && ls -a'"
-      latest_tag: true
       image_repository: chuong
   # chuong:
   #   runs-on: ubuntu-latest

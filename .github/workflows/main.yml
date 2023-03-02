@@ -37,6 +37,8 @@ jobs:
   #     - name: Print the input name to STDOUT
   #       run: ls -a
 
+    runs-on: ubuntu-latest
+    steps:
     - name: 'Setup DataPack Config'
       run: |
         case ${{ inputs.environment }} in

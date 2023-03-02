@@ -3,14 +3,19 @@ name: Run echo
 on:
   workflow_dispatch:
     inputs:
+      # environment:
+      #   description: 'Environment to run tests against'
+      #   required: true
+      #   type: choice
+      #   default: 'staging'
+      #   options:
+      #   - staging
+      #   - production
       environment:
-        description: 'Environment to run tests against'
+        description: 'Environment to run against'
+        type: environment
+        default: development
         required: true
-        type: choice
-        default: 'staging'
-        options:
-        - staging
-        - production
       test_cases:
         description: 'A Test Case is a set of actions executed to verify a particular feature or functionality of your software application.'
         required: true

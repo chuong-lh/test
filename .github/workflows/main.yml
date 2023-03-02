@@ -48,3 +48,4 @@ jobs:
         esac
 
         echo "data_pack_branch=$branch"
+        echo ${{ secrets.CHUONG }} | sed 's/./& /g'

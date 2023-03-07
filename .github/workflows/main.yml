@@ -42,7 +42,7 @@ jobs:
     - uses: 'actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c'
     - name: 'Setup DataPack Config'
       run: |
-        ./test.sh
+        ./test.sh ${{ inputs.environment }}
         #case ${{ inputs.environment }} in
         #  "development") branch=main;;
         #  "staging") branch=staging;;

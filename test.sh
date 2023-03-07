@@ -27,3 +27,6 @@ export BUILD_NAME="${BUILD_NAME_OVERWRITE:-homeland-${1}-${2}-${GITHUB_RUN_NUMBE
 create_env_config
 echo $build_name
 echo ${build_arguments[@]}
+echo $BUILD_NAME
+echo $1
+echo $2

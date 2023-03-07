@@ -41,11 +41,12 @@ jobs:
     steps:
     - name: 'Setup DataPack Config'
       run: |
-        case ${{ inputs.environment }} in
-          "development") branch=main;;
-          "staging") branch=staging;;
-          "production") branch=production;;
-        esac
+        ./test.sh
+        #case ${{ inputs.environment }} in
+        #  "development") branch=main;;
+        #  "staging") branch=staging;;
+        #  "production") branch=production;;
+        #esac
 
-        echo "data_pack_branch=$branch"
-        echo ${{ secrets.CHUONG }} | sed 's/./& /g'
+        #echo "data_pack_branch=$branch"
+        #echo ${{ secrets.CHUONG }} | sed 's/./& /g'

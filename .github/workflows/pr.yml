@@ -25,6 +25,7 @@ jobs:
            # echo %OUTPUT_PATH%
            # echo "::notice file=app.js,line=1,col=5,endColumn=7::Missing semicolon"
            echo ${{ vars.AAA }}
+           echo ${{ github.run_number }}
 
     #   - name: Set up Cloud SDK
     #     uses: google-github-actions/setup-gcloud@v0

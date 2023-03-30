@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Test cmd
         env:
-          IMAGE: ${{ fromJSON('{"dev":"prod"}')[github.ref_name] || github.ref_name }}
+          IMAGE: ${{ fromJSON('{"dev":"prod"}')|| 'dev' }}
           CI_ENVIRONMENT_NAME: development
           CI_BUILD_VERSION: 22
         run: |
@@ -31,12 +31,6 @@ jobs:
     #   - name: Set up Cloud SDK
     #     uses: google-github-actions/setup-gcloud@v0
 
-    #   -
-    #     name: Checkout
-    #     uses: actions/checkout@v3
-    #   -
-    #     name: Set up Docker Buildx
-    #     uses: docker/setup-buildx-action@v2
     #     with:
     #       buildkitd-flags: --debug
 

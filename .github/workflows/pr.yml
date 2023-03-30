@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Test cmd
         env:
-          IMAGE: ${{ (github.ref_name == 'main' && fromJSON('main')) || 'dev' }}
+          IMAGE: ${{ (github.ref_name == 'main') && fromJSON('main') || 'dev' }}
           CI_ENVIRONMENT_NAME: development
           CI_BUILD_VERSION: 22
         run: |

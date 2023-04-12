@@ -16,13 +16,11 @@ on:
         type: environment
         default: development
         required: true
-      test_cases:
+      datapack_only:
         description: 'A Test Case is a set of actions executed to verify a particular feature or functionality of your software application.'
         required: true
-        type: choice
-        default: 'smoke-test'
-        options:
-        - smoke-test
+        type: boolean
+        default: false
 
 jobs:
   development:
@@ -44,12 +42,11 @@ jobs:
       env:
         CI_ENVIRONMENT_NAME: ${{ inputs.environment }}
       run: |
-        ./test.sh
-        #case ${{ inputs.environment }} in
-        #  "development") branch=main;;
-        #  "staging") branch=staging;;
-        #  "production") branch=production;;
-        #esac
-
-        #echo "data_pack_branch=$branch"
-        #echo ${{ secrets.CHUONG }} | sed 's/./& /g'
+        echo "development"
+  production:
+    if: inputs.datapack_only == 'true'
+    runs-on: ubuntu-latest
+    steps:
+    - name: 'Setup production'
+      run: |
+        echo "production"

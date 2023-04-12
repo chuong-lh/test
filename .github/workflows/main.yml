@@ -44,7 +44,7 @@ jobs:
       run: |
         echo "development"
   production:
-    if: inputs.datapack_only == 'true'
+    if: inputs.datapack_only == 'false'
     runs-on: ubuntu-latest
     steps:
     - name: 'Setup production'

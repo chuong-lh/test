@@ -55,7 +55,6 @@ jobs:
           COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
         run: |
-          cosign sign --yes --key env://COSIGN_PRIVATE_KEY ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}@${{ steps.build-and-push.outputs.digest }}
           syft packages ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}@${{ steps.build-and-push.outputs.digest }} -o spdx > latest.spdx
           cosign attach sbom --sbom latest.spdx ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}@${{ steps.build-and-push.outputs.digest }}
           cosign sign --yes --key env://COSIGN_PRIVATE_KEY --attachment sbom ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}@${{ steps.build-and-push.outputs.digest }}

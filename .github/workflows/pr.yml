@@ -27,7 +27,7 @@ jobs:
       - name: 'Set up QEMU'
         uses: 'docker/setup-qemu-action@e81a89b1732b9c48d79cd809d8d81d79c4647a18' #v2.1.0
         with:
-          platforms: linux/amd64,linux/arm64,linux/s390x,linux/ppc64le
+          platforms: linux/amd64,linux/arm64
 
       - name: 'Set up Docker Buildx'
         uses: 'docker/setup-buildx-action@8c0edbc76e98fa90f69d9a2c020dcb50019dc325' #v2.2.1
@@ -48,7 +48,7 @@ jobs:
         with:
           context: .
           file: ${{ env.DOCKER_FILE }}
-          platforms: linux/amd64,linux/arm64,linux/s390x,linux/ppc64le
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: "${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:nightly"
 

@@ -49,17 +49,13 @@ jobs:
           push: true
           tags: "${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:nightly"
 
-      - name: 'Sign image with a key'
+      - name: 'Generate and Push signed SBOM'
         env:
           COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
-        run: |
-          cosign sign --yes --key env://COSIGN_PRIVATE_KEY ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:nightly
-
-      - name: 'Generate and Push signed SBOM'
         run: |
           syft packages ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:nightly -o spdx > latest.spdx
           # This uploads the sbom
           cosign attach sbom --sbom latest.spdx ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:nightly
           # This signs the sbom
-          cosign sign --attachment sbom ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:nightly
+          cosign sign --yes --key env://COSIGN_PRIVATE_KEY --attachment sbom ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:nightly

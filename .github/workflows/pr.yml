@@ -50,6 +50,7 @@ jobs:
           file: ${{ env.DOCKER_FILE }}
           platforms: linux/amd64,linux/arm64
           push: true
+          provenance: false
           tags: "${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:nightly"
 
       - name: 'Generate and Push signed SBOM'

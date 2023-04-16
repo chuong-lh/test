@@ -58,5 +58,5 @@ jobs:
           cosign sign --yes --key env://COSIGN_PRIVATE_KEY ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}@${{ steps.build-and-push.outputs.digest }}
           syft packages ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}@${{ steps.build-and-push.outputs.digest }} -o spdx > latest.spdx
           cosign attach sbom --sbom latest.spdx ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}@${{ steps.build-and-push.outputs.digest }}
-          cosign sign --yes --key env://COSIGN_PRIVATE_KEY --attachment sbom ghcr.io/${DOCKER_REGISTRY_ORG}/${REPO_NAME}@${{ steps.build-and-push.outputs.digest }}
+          cosign sign --yes --key env://COSIGN_PRIVATE_KEY --attachment sbom ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}@${{ steps.build-and-push.outputs.digest }}
 

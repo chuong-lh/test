@@ -54,8 +54,9 @@ jobs:
           tags: "${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:nightly"
 
       - name: 'Generate and Push signed SBOM'
-        env:
-          COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
-          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
+        #  env:
+        #    COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
+        #    COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
         run: |
-          cosign sign --yes --key env://COSIGN_PRIVATE_KEY ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}@${{ steps.build-and-push.outputs.digest }}
+          #  cosign sign --yes --key env://COSIGN_PRIVATE_KEY ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}@${{ steps.build-and-push.outputs.digest }}
+          cosign sign --yes --key gcpkms://projects/r-lab-1134/locations/us/keyRings/github-action/cryptoKeys/cosign/cryptoKeyVersions/1 ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}@${{ steps.build-and-push.outputs.digest }}

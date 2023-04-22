@@ -48,13 +48,11 @@ jobs:
           service_account: "wif-r-lab@r-lab-1134.iam.gserviceaccount.com"
 
       - name: 'Login to GAR'
-        if: ${{ inputs.docker_push }}
         uses: 'docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a' #v2.1.0
         with:
           registry: us-central1-docker.pkg.dev
           username: oauth2accesstoken
           password: ${{ steps.auth.outputs.access_token }}
-
 
       - name: 'cosign-installer'
         uses: 'sigstore/cosign-installer@9e9de2292db7abb3f51b7f4808d98f0d347a8919' #v3.0.2

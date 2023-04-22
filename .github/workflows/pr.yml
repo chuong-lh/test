@@ -53,6 +53,15 @@ jobs:
           provenance: false
           tags: "${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:nightly"
 
+      - id: 'auth'
+        if: ${{ inputs.docker_push }}
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@ef5d53e30bbcd8d0836f4288f5e50ff3e086997d' #v0.8.3
+        with:
+          token_format: 'access_token'
+          workload_identity_provider: "/projects/294207974541/locations/global/workloadIdentityPools/gh-action-ci-pool-1/providers/gh-ci-provider-1"
+          service_account: "wif-r-lab@r-lab-1134.iam.gserviceaccount.com"
+
       - name: 'Generate and Push signed SBOM'
         #  env:
         #    COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}

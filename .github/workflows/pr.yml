@@ -39,6 +39,23 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@ef5d53e30bbcd8d0836f4288f5e50ff3e086997d' #v0.8.3
+        with:
+          token_format: 'access_token'
+          workload_identity_provider: "projects/294207974541/locations/global/workloadIdentityPools/gh-action-ci-pool-1/providers/gh-ci-provider-1"
+          service_account: "wif-r-lab@r-lab-1134.iam.gserviceaccount.com"
+
+      - name: 'Login to GAR'
+        if: ${{ inputs.docker_push }}
+        uses: 'docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a' #v2.1.0
+        with:
+          registry: us-central1-docker.pkg.dev
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
+
+
       - name: 'cosign-installer'
         uses: 'sigstore/cosign-installer@9e9de2292db7abb3f51b7f4808d98f0d347a8919' #v3.0.2
 
@@ -51,15 +68,11 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           provenance: false
-          tags: "${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:nightly"
+          # tags: "${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:nightly"
+          tags: |
+            us-central1-docker.pkg.dev/r-lab-1134/gcf-artifacts/test-test:nightly
+            us-central1-docker.pkg.dev/r-lab-1134/gcf-artifacts/test-test:latest
 
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@ef5d53e30bbcd8d0836f4288f5e50ff3e086997d' #v0.8.3
-        with:
-          token_format: 'access_token'
-          workload_identity_provider: "projects/294207974541/locations/global/workloadIdentityPools/gh-action-ci-pool-1/providers/gh-ci-provider-1"
-          service_account: "wif-r-lab@r-lab-1134.iam.gserviceaccount.com"
 
       - name: 'Generate and Push signed SBOM'
         #  env:
@@ -67,4 +80,4 @@ jobs:
         #    COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
         run: |
           #  cosign sign --yes --key env://COSIGN_PRIVATE_KEY ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}@${{ steps.build-and-push.outputs.digest }}
-          cosign sign --yes --key gcpkms://projects/r-lab-1134/locations/us/keyRings/github-action/cryptoKeys/cosign/cryptoKeyVersions/1 ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}@${{ steps.build-and-push.outputs.digest }}
+          cosign sign --yes --key gcpkms://projects/r-lab-1134/locations/us/keyRings/github-action/cryptoKeys/cosign/cryptoKeyVersions/1 us-central1-docker.pkg.dev/r-lab-1134/gcf-artifacts/test-test@${{ steps.build-and-push.outputs.digest }}

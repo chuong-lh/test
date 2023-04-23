@@ -67,7 +67,7 @@ jobs:
           context: .
           file: ${{ env.DOCKER_FILE }}
           platforms: linux/amd64,linux/arm64
-          push: true
+          push: false
           provenance: false
           # tags: "${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:nightly"
           tags: |

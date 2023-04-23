@@ -71,8 +71,6 @@ jobs:
           # provenance: false
           tags: |
             us-central1-docker.pkg.dev/r-lab-1134/gcf-artifacts/test-test:nightly
-            us-central1-docker.pkg.dev/r-lab-1134/gcf-artifacts/test-test:latest
-
 
       - name: 'Generate and Push signed SBOM'
         #  env:
@@ -80,6 +78,5 @@ jobs:
         #    COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
         run: |
           cosign sign --yes --key gcpkms://projects/r-lab-1134/locations/us-central1/keyRings/github-action/cryptoKeys/cosign1/cryptoKeyVersions/1 us-central1-docker.pkg.dev/r-lab-1134/gcf-artifacts/test-test@${{ steps.build-and-push.outputs.digest }}
-          syft packages us-central1-docker.pkg.dev/r-lab-1134/gcf-artifacts/test-test@${{ steps.build-and-push.outputs.digest }} -o spdx > latest.spdx
-          cosign attach sbom --sbom latest.spdx us-central1-docker.pkg.dev/r-lab-1134/gcf-artifacts/test-test@${{ steps.build-and-push.outputs.digest }}
-          cosign sign --yes --key gcpkms://projects/r-lab-1134/locations/us-central1/keyRings/github-action/cryptoKeys/cosign1/cryptoKeyVersions/1 --attachment sbom us-central1-docker.pkg.dev/r-lab-1134/gcf-artifacts/test-test@${{ steps.build-and-push.outputs.digest }}
+          syft packages us-central1-docker.pkg.dev/r-lab-1134/gcf-artifacts/test-test@${{ steps.build-and-push.outputs.digest }} -o spdx > sbom.spdx
+          cosign attest --key gcpkms://projects/r-lab-1134/locations/us-central1/keyRings/github-action/cryptoKeys/cosign1/cryptoKeyVersions/1 --type spdx --predicate sbom.spdx us-central1-docker.pkg.dev/r-lab-1134/gcf-artifacts/test-test@${{ steps.build-and-push.outputs.digest }} 

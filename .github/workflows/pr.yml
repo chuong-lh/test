@@ -67,9 +67,8 @@ jobs:
           context: .
           file: ${{ env.DOCKER_FILE }}
           platforms: linux/amd64,linux/arm64
-          push: false
+          push: true
           provenance: false
-          # tags: "${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:nightly"
           tags: |
             us-central1-docker.pkg.dev/r-lab-1134/gcf-artifacts/test-test:nightly
             us-central1-docker.pkg.dev/r-lab-1134/gcf-artifacts/test-test:latest

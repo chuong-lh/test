@@ -74,4 +74,4 @@ jobs:
         #    COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
         #    COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
         run: |
-          cosign sign --yes --key gcpkms://projects/r-lab-1134/locations/us-central1/keyRings/github-action/cryptoKeys/cosign1/cryptoKeyVersions/1 us-central1-docker.pkg.dev/r-lab-1134/gcf-artifacts/test-test@${{ steps.build-and-push.outputs.digest }}
+          cosign sign --yes --key gcpkms://projects/r-lab-1134/locations/us-central1/keyRings/github-action/cryptoKeys/cosign1 us-central1-docker.pkg.dev/r-lab-1134/gcf-artifacts/test-test@${{ steps.build-and-push.outputs.digest }}

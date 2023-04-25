@@ -1,7 +1,6 @@
 name: Nightly Release
 
 on:
-  push:
   pull_request:
 
 env:

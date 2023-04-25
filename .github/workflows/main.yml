@@ -38,4 +38,4 @@ jobs:
     steps:
     - uses: 'actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c'
     - name: 'Setup Config'
-      run: ./a.sh 
+      run: ./a.sh ${{ inputs.local }} ${{ inputs.internal }} ${{ inputs.dev }} ${{ inputs.dev2 }} ${{ inputs.dev3 }} ${{ inputs.staging }} ${{ inputs.production }}

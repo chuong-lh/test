@@ -3,50 +3,39 @@ name: Run echo
 on:
   workflow_dispatch:
     inputs:
-      # environment:
-      #   description: 'Environment to run tests against'
-      #   required: true
-      #   type: choice
-      #   default: 'staging'
-      #   options:
-      #   - staging
-      #   - production
-      environment:
-        description: 'Environment to run against'
-        type: environment
-        default: development
-        required: true
-      datapack_only:
-        description: 'A Test Case is a set of actions executed to verify a particular feature or functionality of your software application.'
-        required: true
+      local:
+        description: 'Build Launcher to local'
+        default: true
         type: boolean
-        default: false
+      internal:
+        description: 'Build Launcher to internal'
+        default: true
+        type: boolean
+      dev:
+        description: 'Build Launcher to development'
+        default: true
+        type: boolean
+      dev2:
+        description: 'Build Launcher to development 2'
+        default: true
+        type: boolean
+      dev3:
+        description: 'Build Launcher to development 3'
+        default: true
+        type: boolean
+      staging:
+        description: 'Build Launcher to statging'
+        default: true
+        type: boolean
+      production:
+        description: 'Build Launcher to production'
+        default: true
+        type: boolean
 
 jobs:
   development:
-    # uses: ./.github/workflows/template.yml
-    # with:
-    #   environment: development
-    #   build_options: "'${{ inputs.test_cases }} && ls -a'"
-    #   image_repository: chuong
-  # chuong:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Print the input name to STDOUT
-  #       run: ls -a
-
     runs-on: ubuntu-latest
     steps:
     - uses: 'actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c'
-    - name: 'Setup DataPack Config'
-      env:
-        CI_ENVIRONMENT_NAME: ${{ inputs.environment }}
-      run: |
-        echo "development"
-  production:
-    if: ${{ inputs.datapack_only == true }}
-    runs-on: ubuntu-latest
-    steps:
-    - name: 'Setup production'
-      run: |
-        echo "production"
+    - name: 'Setup Config'
+      run: ./a.sh 

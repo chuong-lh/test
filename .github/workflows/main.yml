@@ -18,5 +18,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 'Setup Config'
-      if: ${{ inputs.client_assets != 'true' }}
+      if: ${{ inputs.client_assets != true }}
       run: echo "Running"

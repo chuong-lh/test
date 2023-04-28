@@ -3,39 +3,28 @@ name: Run echo
 on:
   workflow_dispatch:
     inputs:
-      local:
-        description: 'Build Launcher to local'
-        default: true
-        type: boolean
-      internal:
-        description: 'Build Launcher to internal'
-        default: true
-        type: boolean
-      dev:
-        description: 'Build Launcher to development'
-        default: true
-        type: boolean
-      dev2:
-        description: 'Build Launcher to development 2'
-        default: true
-        type: boolean
-      dev3:
-        description: 'Build Launcher to development 3'
-        default: true
-        type: boolean
-      staging:
-        description: 'Build Launcher to statging'
-        default: true
-        type: boolean
-      production:
-        description: 'Build Launcher to production'
-        default: true
-        type: boolean
+      environment:
+        description: 'Environment to upload datapack'
+        type: environment
+        required: true
 
 jobs:
+  check-env:
+    runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.step1.outputs.env }}
+    steps:
+      - id: step1
+        name: 'Set Output'
+        run: |
+          if ${{ inputs.environment == 'development' }}; then
+            echo "env=dev" >> "$GITHUB_OUTPUT"
+          else
+            echo "env=${{ inputs.inputs.environment }}" >> "$GITHUB_OUTPUT"
+
   development:
     runs-on: ubuntu-latest
+    needs: check-env
     steps:
-    - uses: 'actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c'
     - name: 'Setup Config'
-      run: ./a.sh ${{ inputs.local }} ${{ inputs.internal }} ${{ inputs.dev }} ${{ inputs.dev2 }} ${{ inputs.dev3 }} ${{ inputs.staging }} ${{ inputs.production }}
+      run: echo ${{ needs.check-env.outputs.output1 }}

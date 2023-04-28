@@ -27,7 +27,7 @@ jobs:
   development:
     runs-on: ubuntu-latest
     needs: check-env
-    if ${{ inputs.environment != "development" }}
+    if: ${{ inputs.environment != "development" }}
     steps:
     - name: 'Setup Config'
       run: echo ${{ needs.check-env.outputs.output1 }}

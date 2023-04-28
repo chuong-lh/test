@@ -18,7 +18,8 @@ jobs:
         name: 'Set Output'
         run: |
           if ${{ inputs.environment == 'development' }}; then
-            echo "### Not support development Please check repo data" >> $GITHUB_STEP_SUMMARY
+            # echo "### Not support development Please check repo data" >> $GITHUB_STEP_SUMMARY
+            echo "::notice::Not support development Please check repo data"
             exit 0
           else
             echo "env=${{ inputs.environment }}" >> "$GITHUB_OUTPUT"

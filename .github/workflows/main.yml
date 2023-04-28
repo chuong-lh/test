@@ -20,7 +20,7 @@ jobs:
           if ${{ inputs.environment == 'development' }}; then
             echo "env=dev" >> "$GITHUB_OUTPUT"
           else
-            echo "env=${{ inputs.inputs.environment }}" >> "$GITHUB_OUTPUT"
+            echo "env=${{ inputs.environment }}" >> "$GITHUB_OUTPUT"
           fi
 
   development:

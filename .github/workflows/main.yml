@@ -16,7 +16,7 @@ on:
 jobs:
   development:
     runs-on: ubuntu-latest
-    if: ${{ inputs.client_assets != 'true' || inputs.data_only == 'true' }}
+    if: ${{ inputs.client_assets != 'true' }}
     steps:
     - name: 'Setup Config'
       run: echo "Running"

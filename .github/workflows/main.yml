@@ -3,32 +3,21 @@ name: Run echo
 on:
   workflow_dispatch:
     inputs:
-      environment:
-        description: 'Environment to upload datapack'
-        type: environment
-        required: true
+      client_assets:
+        description: 'Client'
+        required: false
+        default: false
+        type: string
+      data_only:
+        description: 'Data'
+        required: false
+        type: string
 
 jobs:
-  check-env:
-    runs-on: ubuntu-latest
-    outputs:
-      output1: ${{ steps.step1.outputs.env }}
-    steps:
-      - id: step1
-        name: 'Set Output'
-        run: |
-          if ${{ inputs.environment == 'development' }}; then
-            # echo "### Not support development Please check repo data" >> $GITHUB_STEP_SUMMARY
-            echo "::notice::Not support development Please check repo data"
-            exit 0
-          else
-            echo "env=${{ inputs.environment }}" >> "$GITHUB_OUTPUT"
-          fi
-
   development:
     runs-on: ubuntu-latest
-    if: ${{ inputs.environment != 'development' }}
+    if: ${{ inputs.client_assets != 'true' }}
     needs: check-env
     steps:
     - name: 'Setup Config'
-      run: echo ${{ needs.check-env.outputs.output1 }}
+      run: echo "Running"

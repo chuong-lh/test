@@ -17,7 +17,6 @@ jobs:
   development:
     runs-on: ubuntu-latest
     if: ${{ inputs.client_assets != 'true' }}
-    needs: check-env
     steps:
     - name: 'Setup Config'
       run: echo "Running"

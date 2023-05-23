@@ -1,18 +1,23 @@
 #!/bin/bash
 
-local=$1
-internal=$2
-dev=$3
-dev2=$4
-dev3=$5
-staging=$6
-production=$7
+if expr "${CI_ENVIRONMENT_NAME}" : "dev" > /dev/null; then
+    export BUILD_NAME='Homeland'
 
-# Loop through each input and check its value
-for input in local internal dev dev2 dev3 staging production; do
-  if [ "${!input}" = true ]; then
-    echo "Building Launcher for $input environment"
-  else
-    echo "Skipping build for $input environment"
-  fi
-done
+    if [ "${CI_LAUNCHER_LOG}" = true ]; then
+        export build_arguments=(
+            -architect 'Mono'
+            -has_log 'true'
+            -display_name 'Homeland'
+            -mac_architect 2
+        )
+    else
+        export build_arguments=(
+            -architect 'Mono'
+            -display_name 'Homeland'
+            -mac_architect 2
+        )
+    fi
+fi
+
+echo $BUILD_NAME
+echo ${build_arguments[@]}

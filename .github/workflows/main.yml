@@ -12,11 +12,16 @@ on:
         description: 'Data'
         required: false
         type: boolean
+        default: true 
+
+env:
+  CI_LAUNCHER_LOG: ${{ inputs.data_only }}
+  CI_ENVIRONMENT_NAME: development
 
 jobs:
   development:
     runs-on: ubuntu-latest
     steps:
     - name: 'Setup Config'
-      if: ${{ inputs.client_assets != true || inputs.data_only == true }}
-      run: echo "Running"
+      # if: ${{ inputs.client_assets != true || inputs.data_only == true }}
+      run: ./a.sh
